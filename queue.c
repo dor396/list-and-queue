@@ -1,6 +1,11 @@
 #include "queue.h"
 
-Queue* CreateQueue() {
+/************************************************
+*create and initializing queue					*
+*Rerturn NULL if memory allocation failed		*
+*else, return ptr to Queue (should be free)		*
+************************************************/
+extern Queue* createQueue() {
 	Queue* newQueue = (Queue*)malloc(sizeof(Queue));
 	if (newQueue == NULL) {
 		return NULL;
@@ -8,20 +13,25 @@ Queue* CreateQueue() {
 	newQueue->first = NULL;
 	newQueue->nextInit = &newQueue->first;
 	newQueue->length = 0;
+	return newQueue;
 }
 
-void DestroyQueue(Queue* queue) {
+//delete all queue objects
+extern void destroyQueue(Queue* queue) {
 	Node* temp;
 	while (queue->first != NULL) {
 		temp = queue->first;
 		queue->first = queue->first->next;
 		free(temp);
 	}
-	free(queue);
-	//queue = NULL;
 }
 
-int AddNode(Queue* queue, double value) {
+/************************************************
+*add value to the end of queue					*
+*Rerturn 0 if memory allocation failed			*
+*else, return 1									*
+************************************************/
+extern int addNode(Queue* queue, double value) {
 	Node* temp = (Node*)malloc(sizeof(Node));
 	if (temp == NULL) {
 		return 0;
@@ -33,12 +43,13 @@ int AddNode(Queue* queue, double value) {
 	return 1;
 }
 
-double pop(Queue* queue) {
+/************************************************
+return data of first Node and remove the node.	*
+***DONT USE FOR EMPTY QUEUE***					*
+************************************************/
+extern double pop(Queue* queue) {
 	Node* temp;
 	double value;
-	if (queue->first == NULL) {
-		return NULL;
-	}
 	temp = queue->first;
 	queue->first = temp->next;
 	if (queue->first == NULL) {
@@ -49,12 +60,15 @@ double pop(Queue* queue) {
 	return value;
 }
 
-int GetLength(Queue* queue) {
+//return list length
+extern int getLength(Queue* queue) {
 	return queue->length;
 }
-double top(Queue* queue) {
-	if (queue->first == NULL) {
-		return NULL;
-	}
+
+/************************************************
+return data of first Node						*
+***DONT USE FOR EMPTY QUEUE***					*
+************************************************/
+extern double top(Queue* queue) {
 	return queue->first->data;
 }

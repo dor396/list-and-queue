@@ -5,20 +5,10 @@
 
 //LIST OF DOUBLES MODULE
 
-struct List {
-	struct Node {
-		struct Node* next;
-		struct Node* prev;
-		double data;
-	};
-	struct Node* start;
-	struct Node* end;
-	int length;
-	double sum;
-};
+//List Object
 typedef struct List List;
+//Node of list
 typedef struct Node Node;
-
 /************************************************
 *create and initializing list					*
 *Rerturn NULL if memory allocation failed		*
@@ -57,7 +47,7 @@ extern Node* getListNext(Node*);
 extern Node* getListPrev(Node*);
 
 //return Node data
-extern double getListData(Node*);
+extern double getNodeData(Node*);
 
 //return list average
 extern double getListAverage(List*);

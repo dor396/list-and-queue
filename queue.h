@@ -1,20 +1,11 @@
 #ifndef QUEUE_H
 #define QUEUE_H
-#include <stdio.h>
-#include <malloc.h>
 
 //QUEUE OF DOUBLES MODULE
-struct Queue {
-	struct Node {
-		struct Node* next;
-		double data;
-	};
-	struct Node* first;
-	struct Node** nextInit;
-	//count the queue size
-	int length;
-};
+
+//Queue object
 typedef struct Queue Queue;
+//Node of queue
 typedef struct Node Node;
 
 //create and initializing queue

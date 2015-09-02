@@ -1,5 +1,15 @@
 #include "list.h"
-
+struct List {
+	struct Node {
+		struct Node* next;
+		struct Node* prev;
+		double data;
+	};
+	struct Node* start;
+	struct Node* end;
+	int length;
+	double sum;
+};
 /************************************************
 *create and initializing list					*
 *Rerturn NULL if memory allocation failed		*
@@ -111,7 +121,7 @@ extern Node* getListPrev(Node* node) {
 }
 
 //return Node data
-extern double getListData(Node* node) {
+extern double getNodeData(Node* node) {
 	return node->data;
 }
 

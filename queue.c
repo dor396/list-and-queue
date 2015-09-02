@@ -1,5 +1,7 @@
 #include "queue.h"
 #include "list.h"
+#include <stdio.h>
+#include <malloc.h>
 //Queue By list
 struct Queue {
 	List* queue;

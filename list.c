@@ -1,4 +1,6 @@
 #include "list.h"
+#include <stdio.h>
+#include <malloc.h>
 struct List {
 	struct Node {
 		struct Node* next;

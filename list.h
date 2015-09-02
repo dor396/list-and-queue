@@ -1,7 +1,5 @@
 #ifndef LIST_H
 #define LIST_H
-#include <stdio.h>
-#include <malloc.h>
 
 //LIST OF DOUBLES MODULE
 

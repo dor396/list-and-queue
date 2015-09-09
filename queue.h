@@ -9,19 +9,21 @@ typedef struct Queue Queue;
 typedef struct Node Node;
 
 //create and initializing queue
-extern Queue* createQueue();
+extern Queue* createQueue(void (*add)(void*, void*),
+							void (*sub)(void*, void*),
+							void* (*div)(void*, void*));
 
 //delete all queue objects
 extern void destroyQueue(Queue*);
 
 //add value to the end of queue
-extern int addQueueNode(Queue*, double);
+extern int addQueueNode(Queue*, void*);
 
 /************************************************
 return data of first Node and remove the node.	*
 ***DONT USE FOR EMPTY QUEUE (length==0)***					*
 ************************************************/
-extern double popQueue(Queue*);
+extern void* popQueue(Queue*);
 
 //return list length
 extern int getQueueLength(Queue*);
@@ -30,6 +32,6 @@ extern int getQueueLength(Queue*);
 return data of first Node						*
 ***DONT USE FOR EMPTY QUEUE (length==0)***					*
 ************************************************/
-extern double topQueue(Queue*);
+extern void* topQueue(Queue*);
 
 #endif

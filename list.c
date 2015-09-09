@@ -1,23 +1,29 @@
 #include "list.h"
 #include <stdio.h>
 #include <malloc.h>
+//***free sum?
 struct List {
 	struct Node {
 		struct Node* next;
 		struct Node* prev;
-		double data;
+		void* data;
 	};
 	struct Node* start;
 	struct Node* end;
+	void (*add)(void*, void*);
+	void (*sub)(void*, void*);
+	void* (*div)(void*, void*);
+	void* sum;
 	int length;
-	double sum;
 };
 /************************************************
 *create and initializing list					*
 *Rerturn NULL if memory allocation failed		*
 *else, return ptr to List (should be free)		*
 ************************************************/
-extern List * createList() {
+extern List * createList(void (*add)(void*,void*),
+							void (*sub)(void*, void*), 
+							void* (*div)(void*, void*)) {
 	List* newList;
 	newList = (List*)malloc(sizeof(List));
 	if (newList == NULL) {
@@ -25,8 +31,11 @@ extern List * createList() {
 	}
 	newList->start = NULL;
 	newList->end = NULL;
+	newList->add = add;
+	newList->sub = sub;
+	newList->div = div;
 	newList->length = 0;
-	newList->sum = 0;
+	newList->sum = NULL;
 	return newList;
 }
 
@@ -36,6 +45,7 @@ extern void destroyList(List* list) {
 	while (list->start != NULL) {
 		temp = list->start;
 		list->start = list->start->next;
+		free(temp->data);
 		free(temp);
 	}
 	free(list);
@@ -48,13 +58,13 @@ list											*
 *Rerturn 0 if memory allocation failed			*
 *else return 1									*
 ************************************************/
-extern int addListNode(List* list, double value,Node* beforeNode) {
+extern int addListNode(List* list, void* data,Node* beforeNode) {
 	Node* temp = (Node*)malloc(sizeof(Node));
 	if (temp == NULL) {
 		return 0;
 	}
 	temp->next = beforeNode;
-	temp->data = value;
+	temp->data = data;
 	if (beforeNode == NULL) {
 		temp->prev = list->end;
 		list->end->next = beforeNode;
@@ -73,7 +83,7 @@ extern int addListNode(List* list, double value,Node* beforeNode) {
 		list->start = list->end;
 	}
 	list->length++;
-	list->sum += value;
+	list->add(list->sum, data);
 	return 1;
 }
 
@@ -92,7 +102,8 @@ extern void deleteListNode(List* list, Node* node) {
 		list->end = node->prev;
 	}
 	list->length--;
-	list->sum -= node->data;
+	list->sub(list->sum, node->data);
+	free(node->data);
 	free(node);
 }
 
@@ -123,11 +134,11 @@ extern Node* getListPrev(Node* node) {
 }
 
 //return Node data
-extern double getNodeData(Node* node) {
+extern void* getNodeData(Node* node) {
 	return node->data;
 }
 
 //return list average
-extern double getListAverage(List* list){
-	return list->sum / list->length;
+extern void* getListAverage(List* list){
+	return list->div(list->sum, &list->length);
 }

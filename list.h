@@ -1,5 +1,5 @@
 #ifndef LIST_H
-#define LIST_H
+#define LIST_H	
 
 //LIST OF DOUBLES MODULE
 
@@ -12,7 +12,9 @@ typedef struct Node Node;
 *Rerturn NULL if memory allocation failed		*
 *else, return ptr to List (should be free)		*
 ************************************************/
-extern List* createList();
+extern List* createList(void (*add)(void*, void*),
+						void (*sub)(void*, void*),
+						void* (*div)(void*, void*));
 
 //delete all list objects
 extern void destroyList(List*);
@@ -24,7 +26,7 @@ list											*
 *Rerturn 0 if memory allocation failed			*
 *else return 1									*
 ************************************************/
-extern int addListNode(List*, double, Node*);
+extern int addListNode(List*, void*, Node*);
 
 //delete Node from list
 extern void deleteListNode(List*, Node*);
@@ -45,8 +47,8 @@ extern Node* getListNext(Node*);
 extern Node* getListPrev(Node*);
 
 //return Node data
-extern double getNodeData(Node*);
+extern void* getNodeData(Node*);
 
 //return list average
-extern double getListAverage(List*);
+extern void* getListAverage(List*);
 #endif

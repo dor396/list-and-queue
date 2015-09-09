@@ -67,8 +67,13 @@ extern int addListNode(List* list, void* data,Node* beforeNode) {
 	temp->data = data;
 	if (beforeNode == NULL) {
 		temp->prev = list->end;
-		list->end->next = beforeNode;
-		list->end = beforeNode;
+		if (list->end != NULL) {
+			list->end->next = temp;
+		}
+		else {
+			list->start = temp;
+		}
+		list->end = temp;
 	}
 	else if (beforeNode->prev==NULL){
 		temp->prev = beforeNode->prev;
@@ -78,9 +83,6 @@ extern int addListNode(List* list, void* data,Node* beforeNode) {
 		temp->prev = beforeNode->prev;
 		beforeNode->prev->next = temp;
 		beforeNode->prev = temp;
-	}
-	if (list->start == NULL) {
-		list->start = list->end;
 	}
 	list->length++;
 	list->add(list->sum, data);

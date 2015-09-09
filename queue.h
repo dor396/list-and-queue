@@ -8,7 +8,13 @@ typedef struct Queue Queue;
 //Node of queue
 typedef struct Node Node;
 
-//create and initializing queue
+
+/************************************************
+*create and initializing queue					*
+*add function: enter p1+p2 into p1				*
+*sub function: enter p1-p2 into p1				*
+*div function: return pointer to p1/p2			*
+************************************************/
 extern Queue* createQueue(void (*add)(void*, void*),
 							void (*sub)(void*, void*),
 							void* (*div)(void*, void*));

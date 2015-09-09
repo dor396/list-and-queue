@@ -11,6 +11,9 @@ typedef struct Node Node;
 *create and initializing list					*
 *Rerturn NULL if memory allocation failed		*
 *else, return ptr to List (should be free)		*
+*add function: enter p1+p2 into p1				*
+*sub function: enter p1-p2 into p1				*
+*div function: return pointer to p1/p2			*
 ************************************************/
 extern List* createList(void (*add)(void*, void*),
 						void (*sub)(void*, void*),

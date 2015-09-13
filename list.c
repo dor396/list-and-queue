@@ -13,6 +13,7 @@ struct List {
 	void (*add)(void*, void*);
 	void (*sub)(void*, void*);
 	void* (*div)(void*, void*);
+	void (*destroy)(void*);
 	void* sum;
 	int length;
 };
@@ -23,7 +24,8 @@ struct List {
 ************************************************/
 extern List * createList(void (*add)(void*,void*),
 							void (*sub)(void*, void*), 
-							void* (*div)(void*, void*)) {
+							void* (*div)(void*, void*),
+							void (*destroy)(void*)) {
 	List* newList;
 	newList = (List*)malloc(sizeof(List));
 	if (newList == NULL) {
@@ -34,6 +36,7 @@ extern List * createList(void (*add)(void*,void*),
 	newList->add = add;
 	newList->sub = sub;
 	newList->div = div;
+	newList->destroy = destroy;
 	newList->length = 0;
 	newList->sum = NULL;
 	return newList;
@@ -45,7 +48,7 @@ extern void destroyList(List* list) {
 	while (list->start != NULL) {
 		temp = list->start;
 		list->start = list->start->next;
-		free(temp->data);
+		list->destroy(temp->data);
 		free(temp);
 	}
 	free(list);
@@ -78,6 +81,7 @@ extern int addListNode(List* list, void* data,Node* beforeNode) {
 	else if (beforeNode->prev==NULL){
 		temp->prev = beforeNode->prev;
 		beforeNode->prev = temp;
+		list->start = temp;
 	}
 	else {
 		temp->prev = beforeNode->prev;

@@ -17,7 +17,8 @@ typedef struct Node Node;
 ************************************************/
 extern List* createList(void (*add)(void*, void*),
 						void (*sub)(void*, void*),
-						void* (*div)(void*, void*));
+						void* (*div)(void*, void*),
+						void (*destroy)(void* data));
 
 //delete all list objects
 extern void destroyList(List*);
